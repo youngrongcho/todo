@@ -4,12 +4,14 @@ import lombok.Getter;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
+import org.springframework.web.bind.MissingServletRequestParameterException;
 
 import javax.validation.ConstraintViolation;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+@Getter
 public class ErrorResponse {
     private String message;
     private HttpStatus httpStatus;
@@ -38,6 +40,10 @@ public class ErrorResponse {
         return new ErrorResponse(FieldError.of(bindingResult), null);
     }
 
+    public static ErrorResponse of(MissingServletRequestParameterException e){
+        return new ErrorResponse(e.getMessage(), HttpStatus.BAD_REQUEST);
+    }
+
 
     @Getter
     private static class Constraint {
@@ -51,7 +57,7 @@ public class ErrorResponse {
             this.invalidValue = invalidValue;
         }
 
-        private static List<Constraint> of(Set<ConstraintViolation<?>> constraintViolations){
+        public static List<Constraint> of(Set<ConstraintViolation<?>> constraintViolations){
             return constraintViolations.stream().map(
                     constraintViolation -> new Constraint(constraintViolation.getMessage(),
                                 constraintViolation.getPropertyPath().toString(),
@@ -60,6 +66,7 @@ public class ErrorResponse {
         }
     }
 
+    @Getter
     private static class FieldError {
         private String field;
         private String rejectedValue;
@@ -71,7 +78,7 @@ public class ErrorResponse {
             this.message = message;
         }
 
-        private static List<FieldError> of(BindingResult bindingResult){
+        public static List<FieldError> of(BindingResult bindingResult){
             List<org.springframework.validation.FieldError> fieldErrors = bindingResult.getFieldErrors();
             return fieldErrors.stream().map(
                     fieldError -> new FieldError(fieldError.getField(),

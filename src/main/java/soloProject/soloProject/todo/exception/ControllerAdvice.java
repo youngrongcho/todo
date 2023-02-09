@@ -5,6 +5,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
+import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
@@ -35,5 +36,11 @@ public class ControllerAdvice {
     public ResponseEntity methodArgumentNotValidExceptionHandler(MethodArgumentNotValidException e){
         log.error("# MethodArgumentNotValidException : {}", e.getMessage());
         return new ResponseEntity(ErrorResponse.of(e.getBindingResult()), HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(MissingServletRequestParameterException.class)
+    public ResponseEntity missingServletRequestParameterExceptionHandler(MissingServletRequestParameterException e){
+        log.error("# MissingServletRequestParameterException : {}", e.getMessage());
+        return new ResponseEntity(ErrorResponse.of(e), HttpStatus.BAD_REQUEST);
     }
 }
