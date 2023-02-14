@@ -16,5 +16,5 @@ Todo 관리를 위한 웹 애플리케이션입니다.
 
 view 연결 주소입니다. 
 서버를 실행하고 {URI}에 서버 실행 주소를 입력하여 사용 가능합니다. 
-https://todobackend.com/client/index.html?{URI}
-(예시) https://todobackend.com/client/index.html?http://localhost:8080/
+- https://todobackend.com/client/index.html?{URI}
+- (예시) https://todobackend.com/client/index.html?http://localhost:8080/
