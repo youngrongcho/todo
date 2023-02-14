@@ -13,7 +13,7 @@ import javax.persistence.*;
 public class Todos {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer Id;
+    private Integer id;
 
     @Column(nullable = false)
     private String title;
