@@ -8,7 +8,7 @@ spring:
   jpa:
     properties:
       hibernate:
-        highlight_sql: true
+        highlight_sql: true # dddd
         format_sql: true  # SQL pretty print
     hibernate:
       ddl-auto: create  # 테이블 자동 구성(드랍 & 생성)
